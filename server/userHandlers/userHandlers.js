@@ -9,7 +9,6 @@ const {
       password,
       handle,
     } = req.body;
-    // create user in database only if handle is unique
     db.doc(`/users/${handle}`).get()
     .then(doc => {
       if(doc.exists){
@@ -24,7 +23,6 @@ const {
         })
       }
     })
-    // // store created user in firestore
     .then((user) => {
       const userCredentials = {
          imageUrl:'https://firebasestorage.googleapis.com/v0/b/social-app-roy.appspot.com/o/defaultImage.png?alt=media&token=4acb0631-14ce-44a9-93fc-331e67860f02',
@@ -101,6 +99,14 @@ exports.uploadImage = (req, res,) => {
 
 };
 
-exports.addUserDetails = ()=>{
-    console.log('un')
+//add user details 
+exports.addUserDetails = (req, res)=>{
+    const {bio, website, location} = req.body;
+    db.doc('/users/rohan').update({
+      bio, 
+      website,
+      location
+    })
+    .then(() => res.json({message:'details added'}))
+    .catch((err) => res.status(500).json({error:err.code}))
 }
