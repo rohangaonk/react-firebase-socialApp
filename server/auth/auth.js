@@ -21,6 +21,7 @@ const checkIfAuthenticated = (req, res, next) => {
   })
   .then(data => {
     req.user.handle = data.docs[0].data().handle;
+    req.user.imageUrl = data.docs[0].data().imageUrl;
     return next()
   })
   .catch(err =>  res.status(401).json({err:err.message})
