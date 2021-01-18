@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { signupUser } from "../redux/actions/userActions";
+import { clearError } from "../redux/actions/dataActions";
 
 const style = (theme) => ({ ...theme.customStyles });
 
@@ -33,6 +34,10 @@ class signup extends Component {
     this.state = {
       ...INITIAL_STATE,
     };
+  }
+
+  componentDidMount() {
+    this.props.clearError();
   }
 
   handleSubmit = (e) => {
@@ -223,6 +228,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   signupUser,
+  clearError,
 };
 
 export default connect(

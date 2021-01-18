@@ -79,7 +79,7 @@ exports.commentOnScream = (req, res) => {
     userHandle: req.user.handle,
     userImage: req.user.imageUrl,
   };
-  console.log(newComment);
+
   db.doc(`/scream/${req.params.screamId}`)
     .get()
     .then((doc) => {

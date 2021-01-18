@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 // Redux stuff
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
+import { clearError } from "../redux/actions/dataActions";
 
 const style = (theme) => ({ ...theme.customStyles });
 
@@ -33,6 +34,9 @@ class login extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.clearError();
+  }
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -189,6 +193,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   loginUser,
+  clearError,
 };
 
 export default connect(

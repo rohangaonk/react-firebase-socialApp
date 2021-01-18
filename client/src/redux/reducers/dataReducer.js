@@ -13,6 +13,7 @@ const initialState = {
   screams: [],
   scream: {
     comments: [],
+    commentCount: 0,
   },
   loading: false,
 };
@@ -41,6 +42,7 @@ export default function dataReducer(state = initialState, action) {
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:
       let newScream = action.payload;
+
       return {
         ...state,
         screams: state.screams.map((scream) =>
@@ -48,6 +50,7 @@ export default function dataReducer(state = initialState, action) {
             ? { ...scream, likeCount: newScream.likeCount }
             : { ...scream }
         ),
+        scream: { ...action.payload, comments: [...state.scream.comments] },
       };
     case DELETE_SCREAM:
       const index = state.screams.findIndex(
@@ -70,9 +73,15 @@ export default function dataReducer(state = initialState, action) {
     case SUBMIT_COMMENT:
       return {
         ...state,
+        screams: state.screams.map((scream) =>
+          scream.screamId === action.payload.screamId
+            ? { ...scream, commentCount: scream.commentCount + 1 }
+            : { ...scream }
+        ),
         scream: {
           ...state.scream,
-          comments: [action.payload, ...state.scream.comments],
+          commentCount: state.scream.commentCount + 1,
+          comments: [{ ...action.payload }, ...state.scream.comments],
         },
       };
     default:
