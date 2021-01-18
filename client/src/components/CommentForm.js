@@ -29,7 +29,7 @@ class CommentForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (!this.state.body.trim())
-      this.setState({ error: "Cannot have empty comment" });
+      this.setState({ error: "Cannot have empty Comment" });
     else {
       this.setState({ error: "" });
       this.props.submitComment(this.props.screamId, {
