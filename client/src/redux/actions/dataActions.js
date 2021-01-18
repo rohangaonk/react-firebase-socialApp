@@ -24,7 +24,7 @@ export const getScreams = () => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) =>
+    .catch(() =>
       dispatch({
         type: SET_SCREAMS,
         payload: [],
