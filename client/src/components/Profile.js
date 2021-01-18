@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import dayjs from "dayjs";
 import { Paper } from "@material-ui/core";
 import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import ProfileSkeleton from "../util/ProfileSkeleton";
 
 const styles = (theme) => ({
   paper: {
@@ -180,7 +181,7 @@ class Profile extends Component {
         </Paper>
       )
     ) : (
-      "loading"
+      <ProfileSkeleton />
     );
     return profileMarkup;
   }

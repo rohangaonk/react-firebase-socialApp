@@ -5,11 +5,15 @@ import {
   LOADING_DATA,
   DELETE_SCREAM,
   POST_SCREAM,
+  SET_SCREAM,
+  SUBMIT_COMMENT,
 } from "../types";
 
 const initialState = {
   screams: [],
-  scream: {},
+  scream: {
+    comments: [],
+  },
   loading: false,
 };
 
@@ -25,6 +29,14 @@ export default function dataReducer(state = initialState, action) {
         ...state,
         loading: false,
         screams: [...action.payload],
+      };
+
+    case SET_SCREAM:
+      return {
+        ...state,
+        scream: {
+          ...action.payload,
+        },
       };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:
@@ -54,6 +66,14 @@ export default function dataReducer(state = initialState, action) {
       return {
         ...state,
         screams: [action.payload, ...state.screams],
+      };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        scream: {
+          ...state.scream,
+          comments: [action.payload, ...state.scream.comments],
+        },
       };
     default:
       return {

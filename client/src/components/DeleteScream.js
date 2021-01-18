@@ -14,8 +14,7 @@ const styles = (theme) => ({
   ...theme.customStyles,
   deleteButton: {
     position: "absolute",
-    right: 25,
-    top: 20,
+    left: "90%",
   },
 });
 
@@ -33,7 +32,7 @@ class DeleteScream extends Component {
 
   deleteScream = () => {
     this.props.deleteScream(this.props.screamId);
-    this.setState({ open: true });
+    this.setState({ open: false });
   };
   render() {
     const { classes } = this.props;

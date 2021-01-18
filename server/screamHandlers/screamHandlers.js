@@ -76,9 +76,10 @@ exports.commentOnScream = (req, res) => {
     body: req.body.body,
     createdAt: new Date().toISOString(),
     screamId: req.params.screamId,
-    userHandle: req.user.userHandle,
+    userHandle: req.user.handle,
     userImage: req.user.imageUrl,
   };
+  console.log(newComment);
   db.doc(`/scream/${req.params.screamId}`)
     .get()
     .then((doc) => {

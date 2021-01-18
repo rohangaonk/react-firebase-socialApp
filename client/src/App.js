@@ -11,6 +11,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import Navbar from "./components/Navbar";
 import AuthRoute from "./util/AuthRoute";
+import user from "./pages/user";
 
 // Redux
 import { Provider } from "react-redux";
@@ -49,6 +50,7 @@ class App extends Component {
                 <Route exact path="/" component={home} />
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/signup" component={signup} />
+                <Route exact path="/users/:handle" component={user} />
               </Switch>
             </div>
           </Router>

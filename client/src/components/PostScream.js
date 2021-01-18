@@ -10,20 +10,21 @@ import Dialog from "@material-ui/core/Dialog";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { postScream } from "../redux/actions/dataActions";
+import { postScream, clearError } from "../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.customStyles,
   submitButton: {
     position: "relative",
+    float: "right",
   },
   progressSpinner: {
     position: "absolute",
   },
   closeButton: {
     position: "absolute",
-    left: "90%",
-    top: "10%",
+    left: "91%",
+    top: "6%",
   },
   customeError: {
     border: "1px solid red",
@@ -40,13 +41,27 @@ class PostScream extends Component {
     body: "",
     error: "",
   };
-  static getDerivedStateFromProps;
+
+  componentDidUpdate(prevProps) {
+    //   condition to run code only when props updata and not when state update
+    if (
+      prevProps.UI.loading !== this.props.UI.loading ||
+      prevProps.UI.uiError !== this.props.UI.uiError
+    ) {
+      if (this.props.UI.uiError)
+        this.setState({ error: this.props.UI.uiError });
+      if (!this.props.UI.uiError && !this.props.UI.loading) {
+        this.setState({ body: "", open: false, error: "" });
+      }
+    }
+  }
 
   handleOpen = () => {
     this.setState({ open: true });
   };
   handleClose = () => {
-    this.setState({ open: false });
+    this.props.clearError();
+    this.setState({ open: false, error: "" });
   };
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -134,6 +149,6 @@ const mapStateToProps = (state) => ({
   UI: state.ui,
 });
 
-export default connect(mapStateToProps, { postScream })(
+export default connect(mapStateToProps, { postScream, clearError })(
   withStyles(styles)(PostScream)
 );
