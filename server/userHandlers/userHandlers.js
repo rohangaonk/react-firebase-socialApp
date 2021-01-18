@@ -10,6 +10,7 @@ exports.createUser = (req, res) => {
       if (doc.exists) {
         throw new Error("user handle already exists");
       } else {
+        console.log(email);
         return admin.auth().createUser({
           email,
           password,
@@ -29,7 +30,11 @@ exports.createUser = (req, res) => {
       return db.collection("users").doc(handle).set(userCredentials);
     })
     .then(() => res.status(201).json({ message: "user created" }))
-    .catch((err) => res.status(400).json({ message: err.message }));
+    .catch((err) => {
+      const message = err.message || err.code;
+      console.log(message);
+      res.status(400).json({ message });
+    });
 };
 
 // ******************************************************************************

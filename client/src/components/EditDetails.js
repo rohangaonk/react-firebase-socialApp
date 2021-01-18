@@ -29,7 +29,6 @@ class EditDetails extends Component {
     open: false,
   };
   mapUserDetailsToState = (credentials) => {
-    console.log(credentials.bio);
     this.setState({
       bio: credentials ? credentials.bio : "",
       website: credentials ? credentials.website : "",

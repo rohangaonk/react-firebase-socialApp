@@ -12,11 +12,9 @@ import axios from "axios";
 export const loginUser = (userData, history) => (dispatch) => {
   const { email, password } = userData;
   dispatch({ type: LOADING_UI });
-  console.log(auth.currentUser);
   auth
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      console.log("getiing  token");
       return auth.currentUser.getIdToken(true);
     })
     .then((idToken) => {
@@ -28,7 +26,11 @@ export const loginUser = (userData, history) => (dispatch) => {
       history.push("/");
     })
     .catch((err) => {
-      console.log(err);
+      if (
+        err.code === "auth/user-not-found" ||
+        err.code === "auth/wrong-password"
+      )
+        err.code = "invalid credentials";
       dispatch({
         type: SET_ERRORS,
         payload: err.code,
@@ -51,10 +53,9 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       history.push("/login");
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: SET_ERRORS,
-        payload: err.code,
+        payload: err.response.data.message,
       });
     });
 };
@@ -74,7 +75,7 @@ export const getUserData = () => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.code,
+        payload: err,
       });
     });
 };
@@ -84,24 +85,12 @@ export const logoutUser = () => (dispatch) => {
   auth
     .signOut()
     .then(() => {
-      console.log("singout user");
       localStorage.removeItem("FBIdToken");
       delete axios.defaults.headers.common["Authorization"];
       dispatch({ type: SET_UNAUTHENTICATED });
     })
     .catch((err) => console.log(err));
 };
-
-// ***********************************************************************
-// export const getPersistedUser = () => (dispatch) => {
-//   const token = localStorage.FBIdToken;
-//   if (token) {
-//     const decodedToken = jwtDecode(token);
-//     if (decodedToken.exp * 1000 > Date.now())
-//       dispatch({ type: SET_AUTHENTICATED });
-//   }
-// };
-
 // ***********************************************************************
 export const uploadImage = (formData) => (dispatch) => {
   dispatch({ type: LOADING_USER });

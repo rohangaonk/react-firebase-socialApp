@@ -31,6 +31,7 @@ const themeFile = {
       border: "1px solid red",
       padding: 5,
       borderRadius: 5,
+      marginBottom: 5,
     },
     progress: {
       position: "absolute",
