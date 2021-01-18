@@ -41,7 +41,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
   const { email, password, handle } = newUserData;
   dispatch({ type: LOADING_UI });
   axios
-    .post("/auth/signup", {
+    .post("/user/auth/signup", {
       email,
       password,
       handle,
