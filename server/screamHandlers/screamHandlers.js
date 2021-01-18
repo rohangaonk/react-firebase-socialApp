@@ -116,7 +116,7 @@ exports.likeScream = (req, res) => {
         screamData = doc.data();
         screamData.screamId = doc.id;
         return likeDocument.get();
-      } else throw new Error("scream not found");
+      } else throw new Error("Scream not found");
     })
     .then((data) => {
       if (data.empty)
