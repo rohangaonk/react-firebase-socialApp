@@ -84,7 +84,7 @@ exports.commentOnScream = (req, res) => {
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        throw new Error("scream not found");
+        throw new Error("Scream not found");
       }
       return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
     })
